@@ -15,6 +15,7 @@ class CompanyRepository extends BaseRepository
     protected array $allowedSorts = [
         'id',
         'name',
+        'registration_number',
         'created_at',
         'updated_at',
     ];
@@ -23,6 +24,7 @@ class CompanyRepository extends BaseRepository
     protected array $allowedFilters = [
         'name',
         'description',
+        'registration_number',
     ];
 
     /** Relations that can be included in the results. */

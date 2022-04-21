@@ -24,3 +24,7 @@ QueryBuilder class to reduce the complexity of the queries and more easy to use.
 Repository Interfaces to be agnostic on the way to get data (mysql, mongodb, elasticsearch, ...)
 
 Managers if the Controllers get too fat and need more clarity.
+
+## Demo
+I use [lando](https://docs.lando.dev/) for my local developments and did put the .lando.yml
+You can use it to launch a docker instance and launch tests.

@@ -8,6 +8,7 @@ use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Http\Resources\CompanyResource;
 use App\Models\Company;
+use App\Models\Product;
 use App\Repositories\Eloquent\CompanyRepository;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -49,6 +50,22 @@ class CompanyController extends Controller
     public function destroy(Company $company): Response
     {
         $this->repository->delete($company->id);
+
+        return response()->noContent();
+    }
+
+    public function addProduct(Company $company, Product $product): Response
+    {
+        $product->company()->associate($company);
+        $product->save();
+
+        return response()->noContent();
+    }
+
+    public function removeProduct(Company $company, Product $product): Response
+    {
+        $product->company()->dissociate($company);
+        $product->save();
 
         return response()->noContent();
     }

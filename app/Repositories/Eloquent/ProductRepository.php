@@ -14,6 +14,7 @@ class ProductRepository extends BaseRepository
     /** Fields that can be used to sort the results. */
     protected array $allowedSorts = [
         'id',
+        'name',
         'created_at',
         'updated_at',
     ];

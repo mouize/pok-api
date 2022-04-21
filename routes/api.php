@@ -27,12 +27,17 @@ Route::prefix($apiVersion)
     ->group(function (): void {
         // Authentication
         Route::post('/login', [AuthController::class, 'login']);
-
         Route::post('users', [UserController::class, 'store'])->name('users.store');
+
         Route::middleware('auth:sanctum')->group(function (): void {
             Route::apiResource('users', UserController::class)->except('store');
 
             Route::apiResource('companies', CompanyController::class);
+            Route::post('/companies/{company}/products/{product}', [CompanyController::class, 'addProduct'])
+                ->name('companies.product.store');
+            Route::delete('/companies/{company}/products/{product}', [CompanyController::class, 'removeProduct'])
+                ->name('companies.product.destroy');
+
             Route::apiResource('products', ProductController::class);
         });
     });
