@@ -1,6 +1,12 @@
 <?php
 
-use Illuminate\Http\Request;
+declare(strict_types=1);
+
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +20,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+$apiVersion = Config::get('app.version');
+
+Route::prefix($apiVersion)
+    ->name($apiVersion.'.')
+    ->group(function (): void {
+        // Authentication
+        Route::post('/login', [AuthController::class, 'login']);
+
+        Route::post('users', [UserController::class, 'store'])->name('users.store');
+        Route::middleware('auth:sanctum')->group(function (): void {
+            Route::apiResource('users', UserController::class)->except('store');
+
+            Route::apiResource('companies', CompanyController::class);
+            Route::apiResource('products', ProductController::class);
+        });
+    });
